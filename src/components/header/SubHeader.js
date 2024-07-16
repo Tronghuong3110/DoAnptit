@@ -7,7 +7,7 @@ import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 const SubHeader = () => {
     return (
         <div className='h-6 bg-[#2C2C2C] flex justify-evenly'>
-            <div className='flex w-1/2 justify-center'>
+            <div className='flex w-1/2 ml-[9%]'>
                 {/* icon youtube */}
                 <div className='youtube mr-3'>
                     <FontAwesomeIcon icon={faYoutube} style={{color: "#ffffff"}}/>
