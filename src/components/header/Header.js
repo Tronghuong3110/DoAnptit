@@ -7,7 +7,7 @@ import React from "react";
 
 const Header = () => {
   return (
-    <div className="flex justify-around">
+    <div className="flex justify-around font-bold">
       {/* Logo */}
       <div className="flex items-center">
         <Icon
