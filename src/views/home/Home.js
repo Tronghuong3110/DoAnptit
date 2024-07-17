@@ -4,7 +4,7 @@ import Search from "../../components/search/Search";
 
 const Home = () => {
   return (
-    <div className="relative ">
+    <div className="relative">
       {/* Header */}
       <div className="background w-full h-800px z-10 relative">
         <div className="header fixed w-[100%] z-[10] pt-5 top-0">
