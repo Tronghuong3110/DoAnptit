@@ -1,29 +1,41 @@
 import React, { useState } from "react";
 import Header from "../../components/header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleDown,
+  faImage,
+  faLocationDot,
+} from "@fortawesome/free-solid-svg-icons";
 import Input from "../../components/input/Input";
 import Modal from "../../components/modal/Modal";
 
 const Post = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isModalTypeOpen, setIsModalTypeOpen] = useState(false);
+  const [files, setFiles] = useState([]);
 
-  const handleOpenModal = () => {
-    setModalOpen(true);
-  };
   const handleOpenCloseModalType = () => {
     setIsModalTypeOpen(!isModalTypeOpen);
   };
-  // const handleCloseModalType = () => {
-  //   setIsModalTypeOpen(true);
-  // };
   const handleOpenCloseModal = () => {
     setModalOpen(!isModalOpen);
   };
   const handleSubmit = () => {
     setIsModalTypeOpen(false);
     setModalOpen(false);
+  };
+
+  // ============================= choose image ===================================
+  const chooseFile = () => {
+    const inputFile = document.querySelector("#image");
+    const res = inputFile.click();
+    // console.log(res);
+  };
+
+  const handleChangeFile = (e) => {
+    const image = e.target.value;
+    console.log(e.target);
+    setFiles([...files, image]);
   };
 
   return (
@@ -63,7 +75,7 @@ const Post = () => {
                   <Modal
                     title="Loại bài đăng"
                     // isOpen={isModalTypeOpen}
-                    onClose={()=>setIsModalTypeOpen(false)}
+                    onClose={() => setIsModalTypeOpen(false)}
                     // onSubmit={()}
                   >
                     {/* Modal Content */}
@@ -116,7 +128,7 @@ const Post = () => {
                 )}
               </div>
               {/* name */}
-              <Input title={"Tên sân"}>
+              <Input title={"Tên sân"} margin={"mt-5"} id={"title"}>
                 <span className="text-red-400 ml-1">*</span>
               </Input>
               {/* address */}
@@ -209,11 +221,80 @@ const Post = () => {
                 </Modal>
               )}
               {/* descriptionn */}
-              <textarea className="description"></textarea>
+              <div class="relative mt-5 border-[1px]">
+                <textarea
+                  id="description"
+                  placeholder=" "
+                  required
+                  class="block w-full px-2.5 pb-2.5 pt-4 text-16 text-gray-900 bg-white rounded-lg appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                ></textarea>
+                <label
+                  for="description"
+                  class="absolute text-gray-500 duration-300 transform -translate-y-4 scale-75 top-0 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-1/2 peer-focus:scale-75 peer-focus:-translate-y-5 left-2.5 text-[16px]"
+                >
+                  Mô tả chi tiết
+                  <span className="text-red-400 ml-1 gap-3">*</span>
+                </label>
+              </div>
             </div>
 
-            {/* image and video */}
-            <div className="flex flex-col gap-4 md:w-1/3 w-full relative"></div>
+            {/* image and video and contact */}
+            <div className="flex flex-col gap-4 md:w-1/3 w-full relative">
+              <div className="font-semibold text-lg text-black-ish-200">
+                Thông tin liên hệ
+              </div>
+              {/* info contact */}
+              <div className="contact flex-col gap-4 flex">
+                <Input title={"Số điện thoại"} id={"contact"}>
+                  <span className="text-red-400 ml-1">*</span>
+                </Input>
+
+                <Input title={"Link facebook"} margin={"mt-5"} id={"facebook"}>
+                  <span className="text-red-400 ml-1">*</span>
+                </Input>
+              </div>
+
+              {/* image and video */}
+              <div className="flex flex-col gap-4">
+                <div className="font-semibold text-lg text-black-ish-200 mt-2">
+                  Hình ảnh và video mô tả
+                </div>
+                <div
+                  className="w-full h-[25vh] border-[2px] border-dashed border-[#ccc] flex flex-col hover:opacity-80 hover:cursor-pointer"
+                  onClick={chooseFile}
+                >
+                  <div className="flex justify-center items-center h-3/5">
+                    <FontAwesomeIcon
+                      icon={faImage}
+                      style={{ color: "#000", height: "50px" }}
+                    />
+                  </div>
+                  <div className="flex justify-center items-center text-2xl">
+                    Thêm ảnh hoặc video
+                  </div>
+                  <input
+                    type="file"
+                    hidden
+                    multiple
+                    id="image"
+                    onChange={handleChangeFile}
+                  />
+                </div>
+                {files.length > 0 && (
+                  <div className="mt-2 flex">
+                    {files.map((file, index) => (
+                      <div key={index} className="text-sm text-gray-600">
+                        <img
+                          src={`${file}`}
+                          alt="ảnh test"
+                          className="w-5 h-5"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </main>

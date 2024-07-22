@@ -1,12 +1,12 @@
-import {
-  faUserPlus,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import React from "react";
+import React, { useState } from "react";
+import Authentication from "../Auth/Authentication";
+import Info from "../Auth/Info";
 
 const Header = ( props ) => {
   const textColor = props.textColor;
+  const [isAuth, setIsAuth] = useState(true);
+
   return (
     <div className="flex justify-around font-bold">
       {/* Logo */}
@@ -29,22 +29,7 @@ const Header = ( props ) => {
 
       {/* sign up and login */}
       <div className="relative items-center flex">
-        {/* <FontAwesomeIcon icon={faMagnifyingGlass} style={{color: "#ffffff"}} className="absolute top-[17px] left-[6px]"/>
-          <input placeholder="Search" className=" border-[1px] border-[#cccccc] rounded-[15px] px-[30px] py-[3px]"/> */}
-        <div className="login flex items-center hover-click px-2 py-2">
-          <Icon
-            className={`text-2xl icon ${textColor}`}
-            icon="lets-icons:key-light"
-          />
-          <p className={`${textColor} ml-1 hover-click`}>Sign in</p>
-        </div>
-        {/*  */}
-        <div className="w-[1px] ml-3 mr-3 mt-1 mb-1 bg-[#716a6a]"></div>
-        {/* icon register */}
-        <div className="register flex items-center hover-click px-2 py-2">
-          <FontAwesomeIcon className="icon" icon={faUserPlus} style={{ color: "#ffffff" }} />
-          <p className={`${textColor} ml-2`}>Register</p>
-        </div>
+          {!isAuth ? <Authentication textColor={textColor}/> : <Info/>}
       </div>
     </div>
   );
