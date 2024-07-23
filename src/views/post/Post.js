@@ -8,6 +8,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Input from "../../components/input/Input";
 import Modal from "../../components/modal/Modal";
+import PostGL from "../../components/post/PostGL";
+import PriceAndTime from "../../components/post/PriceAndTime";
 
 const Post = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -128,7 +130,7 @@ const Post = () => {
                 )}
               </div>
               {/* name */}
-              <Input title={"Tên sân"} margin={"mt-5"} id={"title"}>
+              <Input title={"Tên sân"} margin={"mt-5"} id={"title"} type={"text"}>
                 <span className="text-red-400 ml-1">*</span>
               </Input>
               {/* address */}
@@ -236,6 +238,12 @@ const Post = () => {
                   <span className="text-red-400 ml-1 gap-3">*</span>
                 </label>
               </div>
+
+              {/* Các yêu cầu chi tiết */}
+              <PostGL/>
+
+              {/* Các thông tin về giá và thời gian */}
+              <PriceAndTime/>
             </div>
 
             {/* image and video and contact */}
@@ -245,11 +253,11 @@ const Post = () => {
               </div>
               {/* info contact */}
               <div className="contact flex-col gap-4 flex">
-                <Input title={"Số điện thoại"} id={"contact"}>
+                <Input title={"Số điện thoại"} id={"contact"} type={"number"}>
                   <span className="text-red-400 ml-1">*</span>
                 </Input>
 
-                <Input title={"Link facebook"} margin={"mt-5"} id={"facebook"}>
+                <Input title={"Link facebook"} margin={"mt-5"} id={"facebook"} type={"text"}>
                   <span className="text-red-400 ml-1">*</span>
                 </Input>
               </div>
@@ -280,6 +288,7 @@ const Post = () => {
                     onChange={handleChangeFile}
                   />
                 </div>
+                {/* hiển thị danh sách ảnh và video đã chọn */}
                 {files.length > 0 && (
                   <div className="mt-2 flex">
                     {files.map((file, index) => (
