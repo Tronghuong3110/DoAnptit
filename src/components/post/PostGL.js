@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Input from "../input/Input";
 import MultipleSelect from "../select/Select";
 
-const PostGL = () => {
+const PostGL = ({ setValue }) => {
   const data = [
     "Yếu",
     "TB-",
@@ -14,6 +14,7 @@ const PostGL = () => {
     "Chuyên nghiệp",
   ];
   const participants = ["Nam", "Nữ", "Cả nam và nữ"];
+  // const [value, setValue] = useState("");
   return (
     <>
       <div className="font-semibold text-lg text-black-ish-200">
@@ -25,7 +26,7 @@ const PostGL = () => {
         {/* Số lượng tuyển */}
         <Input
           title={"Số lượng cần tuyển"}
-          margin={"w-[48%]"}
+          margin={"w-[48%] rounded border-[#ccc] border-solid"}
           id={"numberGL"}
           type={"number"}
         >
@@ -38,6 +39,7 @@ const PostGL = () => {
           title={"Đối tượng"}
           data={participants}
           id={"participants"}
+          setValue = {setValue}
         />
       </div>
 

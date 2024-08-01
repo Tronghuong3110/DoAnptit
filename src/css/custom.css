@@ -38,5 +38,7 @@ color: #000 !important;
 
 
 /* Search in body */
-
+.react-datepicker-wrapper {
+    width: 40%;
+}
   

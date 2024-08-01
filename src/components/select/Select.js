@@ -32,7 +32,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-const MultipleSelect = ( {width, title, data, id}) => {
+const MultipleSelect = ( {width, title, data, id, setValue}) => {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
 
@@ -44,6 +44,7 @@ const MultipleSelect = ( {width, title, data, id}) => {
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
+    setValue(value);
   };
  
   return (

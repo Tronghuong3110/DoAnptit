@@ -10,11 +10,13 @@ import Input from "../../components/input/Input";
 import Modal from "../../components/modal/Modal";
 import PostGL from "../../components/post/PostGL";
 import PriceAndTime from "../../components/post/PriceAndTime";
+import { Button } from "@mui/material";
 
 const Post = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isModalTypeOpen, setIsModalTypeOpen] = useState(false);
   const [files, setFiles] = useState([]);
+  const [participant, setparticipant] = useState("");
 
   const handleOpenCloseModalType = () => {
     setIsModalTypeOpen(!isModalTypeOpen);
@@ -27,6 +29,11 @@ const Post = () => {
     setModalOpen(false);
   };
 
+  //=================================save======================================
+  const handleSave = () => {
+    console.log(participant);
+  };
+
   // ============================= choose image ===================================
   const chooseFile = () => {
     const inputFile = document.querySelector("#image");
@@ -35,9 +42,13 @@ const Post = () => {
   };
 
   const handleChangeFile = (e) => {
-    const image = e.target.value;
-    console.log(e.target);
-    setFiles([...files, image]);
+    const image = e.target.files[0];
+    console.log(image.type);
+    const obj = {
+      type: image.type,
+      name: URL.createObjectURL(image),
+    };
+    setFiles([...files, obj]);
   };
 
   return (
@@ -130,7 +141,12 @@ const Post = () => {
                 )}
               </div>
               {/* name */}
-              <Input title={"Tên sân"} margin={"mt-5"} id={"title"} type={"text"}>
+              <Input
+                title={"Tên sân"}
+                margin={"mt-5"}
+                id={"title"}
+                type={"text"}
+              >
                 <span className="text-red-400 ml-1">*</span>
               </Input>
               {/* address */}
@@ -240,10 +256,10 @@ const Post = () => {
               </div>
 
               {/* Các yêu cầu chi tiết */}
-              <PostGL/>
+              <PostGL setValue={setparticipant} />
 
               {/* Các thông tin về giá và thời gian */}
-              <PriceAndTime/>
+              <PriceAndTime participant={participant} />
             </div>
 
             {/* image and video and contact */}
@@ -257,7 +273,12 @@ const Post = () => {
                   <span className="text-red-400 ml-1">*</span>
                 </Input>
 
-                <Input title={"Link facebook"} margin={"mt-5"} id={"facebook"} type={"text"}>
+                <Input
+                  title={"Link facebook"}
+                  margin={"mt-5"}
+                  id={"facebook"}
+                  type={"text"}
+                >
                   <span className="text-red-400 ml-1">*</span>
                 </Input>
               </div>
@@ -290,26 +311,47 @@ const Post = () => {
                 </div>
                 {/* hiển thị danh sách ảnh và video đã chọn */}
                 {files.length > 0 && (
-                  <div className="mt-2 flex">
-                    {files.map((file, index) => (
-                      <div key={index} className="text-sm text-gray-600">
-                        <img
-                          src={`${file}`}
-                          alt="ảnh test"
-                          className="w-5 h-5"
-                        />
-                      </div>
-                    ))}
+                  <div className="mt-2 grid gap-3 grid-cols-3">
+                    {files.map((file, index) => {
+                      return (
+                        <div key={index} className="text-sm text-gray-600">
+                          {file.type.startsWith("video") ? (
+                            <video controls className="w-auto h-auto">
+                              <source src={file.name} type="video/mp4" />
+                            </video>
+                          ) : (
+                            <img
+                              src={`${file.name}`}
+                              alt="ảnh test"
+                              className="w-auto h-auto "
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
+            </div>
+          </div>
+
+          {/* button cancel or save */}
+          <div className="my-4 sm:my-6 flex flex-col md:flex-row gap-12 mt-4 justify-center">
+            <div className="btn btn-cancel">
+              <Button variant="outlined">Hủy bỏ</Button>
+            </div>
+
+            <div className="btn btn-save" onClick={handleSave}>
+              <Button variant="contained">Đăng tin</Button>
             </div>
           </div>
         </div>
       </main>
 
       {/* footer */}
-      <div className="footer"></div>
+      <footer className="bg-neutral-800">
+        <div className="footer"></div>
+      </footer>
     </div>
   );
 };
