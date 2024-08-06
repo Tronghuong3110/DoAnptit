@@ -1,10 +1,11 @@
-import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import * as React from "react";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { styled } from "@mui/material/styles";
+import { Box } from "@mui/material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -17,62 +18,36 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker'
-];
-
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
-
-const MultipleSelect = ( {width, title, data, id, setValue}) => {
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+const MultipleSelect = ({ width, title, data, id, setValue, style }) => {
+  const [name, setName] = React.useState("");
 
   const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
+    const value = event.target.value;
+    setName(value);
     setValue(value);
   };
- 
+
   return (
-    <>
-      <FormControl sx={{ m: 1, width: {width}, margin: 0 }}>
+    <Box sx={{ minWidth: { width } }}>
+      <FormControl fullWidth>
         <InputLabel id={id}>{title}</InputLabel>
         <Select
-          labelId={id}
+          labelId={title}
           id={id}
-          value={personName}
+          value={name}
+          label={title}
           onChange={handleChange}
-          input={<OutlinedInput label="Đối tượng"/>}
-          MenuProps={MenuProps}
+          renderValue={(name) => (name ? name.name : "")}
         >
-          { typeof(data) != 'undefined' && data.map((name) => (
-            <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, personName, theme)}
-            >
-              {name}
+          {data.map((item) => (
+            <MenuItem key={item.id} value={item}>
+              {item.name}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
-    </>
+    </Box>
   );
-}
-
+};
 
 export default MultipleSelect;

@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import Input from "../input/Input";
 import MultipleSelect from "../select/Select";
+import PriceAndTime from "./PriceAndTime";
 
-const PostGL = ({ setValue }) => {
+const PostGL = ({ setValue, participant, setTimeRepeat }) => {
   const data = [
-    "Yếu",
-    "TB-",
-    "TB+",
-    "TB++",
-    "TB+++",
-    "Trung Bình Khá",
-    "Khá",
-    "Chuyên nghiệp",
+    { id: 1, name: "Yếu" },
+    { id: 2, name: "TB-" },
+    { id: 3, name: "TB+" },
+    { id: 4, name: "TB++" },
+    { id: 5, name: "TB+++" },
+    { id: 6, name: "Trung Bình Khá" },
+    { id: 7, name: "Khá" },
+    { id: 8, name: "Chuyên nghiệp" }
+  ]
+  const participants = [
+    { id: 1, name: "Nam" },
+    { id: 2, name: "Nữ" },
+    { id: 3, name: "Cả nam và nữ" },
   ];
-  const participants = ["Nam", "Nữ", "Cả nam và nữ"];
   // const [value, setValue] = useState("");
   return (
     <>
@@ -39,7 +44,7 @@ const PostGL = ({ setValue }) => {
           title={"Đối tượng"}
           data={participants}
           id={"participants"}
-          setValue = {setValue}
+          setValue={setValue}
         />
       </div>
 
@@ -77,6 +82,9 @@ const PostGL = ({ setValue }) => {
           Mô tả thêm về đội
         </label>
       </div>
+
+      {/* Các thông tin về giá và thời gian */}
+      <PriceAndTime participant={participant} setTimeRepeat={setTimeRepeat}/>
     </>
   );
 };

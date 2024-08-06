@@ -5,7 +5,7 @@ import Input from "../input/Input";
 import Switch from "@mui/material/Switch";
 import MultipleSelect from "../select/Select";
 
-const PriceAndTime = ({ participant }) => {
+const PriceAndTime = ({ participant, setTimeRepeat }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTIme] = useState(new Date());
@@ -15,37 +15,40 @@ const PriceAndTime = ({ participant }) => {
   const [isWomen, setIsWomen] = useState(false);
 
   const label = { inputProps: { "aria-label": "Switch demo" } };
-  const repeatData = ["Lặp lại 1 tuần", "Lặp lại hàng tuần"];
+  const repeatData = [
+    { id: 1, name: "Lặp lại 1 tuần" },
+    { id: 2, name: "Lặp lại hàng tuần" },
+  ];
   const dayOfWeeks = [
-    "Thứ hai",
-    "Thứ ba",
-    "Thứ tư",
-    "Thứ năm",
-    "Thứ sáu",
-    "Thứ 7",
-    "Chủ nhật",
+    { id: 1, name: "Thứ hai" },
+    { id: 2, name: "Thứ ba" },
+    { id: 3, name: "Thứ tư" },
+    { id: 4, name: "Thứ năm" },
+    { id: 5, name: "Thứ sáu" },
+    { id: 6, name: "Thứ 7" },
+    { id: 7, name: "Chủ nhật" },
   ];
   const shuttlecockTypes = [
-    "Cầu thành công 77",
-    "Cầu thành công 76",
-    "Cầu ba sao proX",
-    "Cầu victor lark 5",
-    "Cầu Vina Star",
-    "Cầu Bubadu",
-    "Cầu lông 88",
-    "Cầu yonex Mavis 10",
-    "Cầu victor NCS",
-    "Cầu pro petrel",
-    "Cầu lining AN01",
-    "Cầu Attack ATD-01",
-    "Cầu PTM 911 pro",
-    "Cầu sao mai",
-    "Cầu tiến bộ",
-    "Cầu lê quang",
-    "Cầu taro",
-    "Cầu xsmash",
-    "Cầu hytec s90",
-    "Cầu yonex AS50",
+    { id: 1, name: "Cầu thành công 77" },
+    { id: 2, name: "Cầu thành công 76" },
+    { id: 3, name: "Cầu ba sao proX" },
+    { id: 4, name: "Cầu victor lark 5" },
+    { id: 5, name: "Cầu Vina Star" },
+    { id: 6, name: "Cầu Bubadu" },
+    { id: 7, name: "Cầu lông 88" },
+    { id: 8, name: "Cầu yonex Mavis 10" },
+    { id: 9, name: "Cầu victor NCS" },
+    { id: 10, name: "Cầu pro petrel" },
+    { id: 11, name: "Cầu lining AN01" },
+    { id: 12, name: "Cầu Attack ATD-01" },
+    { id: 13, name: "Cầu PTM 911 pro" },
+    { id: 14, name: "Cầu sao mai" },
+    { id: 15, name: "Cầu tiến bộ" },
+    { id: 16, name: "Cầu lê quang" },
+    { id: 17, name: "Cầu taro" },
+    { id: 18, name: "Cầu xsmash" },
+    { id: 19, name: "Cầu hytec s90" },
+    { id: 20, name: "Cầu yonex AS50" },
   ];
 
   // if (participant && participant.toLowerCase().includes("nam")) {
@@ -55,15 +58,13 @@ const PriceAndTime = ({ participant }) => {
   //   setIsWomen(true);
   // }
   useEffect(() => {
-    if (participant && participant.toLowerCase() === "nam") {
+    if (participant && participant.id === 1) {
       setIsMan(true);
       setIsWomen(false);
-    }
-    else if (participant && participant.toLowerCase() === "nữ") {
+    } else if (participant && participant.id === 2) {
       setIsWomen(true);
       setIsMan(false);
-    }
-    else if(participant && participant.toLowerCase() === "cả nam và nữ") {
+    } else if (participant && participant.id === 3) {
       setIsWomen(true);
       setIsMan(true);
     }
@@ -140,7 +141,7 @@ const PriceAndTime = ({ participant }) => {
             }`}
           >
             {/* lặp lại hay không */}
-            <div className="isRepeat">
+            <div className="repeat">
               <label>Lặp lại: </label>
               <Switch {...label} onChange={onChangeSwitch} />
             </div>
@@ -153,6 +154,7 @@ const PriceAndTime = ({ participant }) => {
                   title={"Lặp lại"}
                   data={repeatData}
                   id={"repeat"}
+                  setValue={setTimeRepeat}
                 />
               </div>
             )}
@@ -178,11 +180,11 @@ const PriceAndTime = ({ participant }) => {
               <div className="flex justify-between col-span-2">
                 {Array.from({ length: 7 }, (_, i) => (
                   <div className="grid grid-flow-row gap-2">
-                    <label>{dayOfWeeks[i]}</label>
+                    <label>{dayOfWeeks[i].name}</label>
                     <input
                       type="checkbox"
                       placeholder=""
-                      value={dayOfWeeks[i]}
+                      value={dayOfWeeks[i].id}
                       onClick={(element) => chooseDayOfWeek(element)}
                     />
                   </div>
@@ -200,7 +202,11 @@ const PriceAndTime = ({ participant }) => {
       </div>
 
       <div className="time border-2 border-solid border-[#ccc]">
-        <div className={`px-4 py-4 ${isMan || isWomen ? "grid grid-cols-3 gap-3" : ""}`}>
+        <div
+          className={`px-4 py-4 ${
+            isMan || isWomen ? "grid grid-cols-3 gap-3" : ""
+          }`}
+        >
           <div className="shuttlecockType">
             <MultipleSelect
               width={"100%"}

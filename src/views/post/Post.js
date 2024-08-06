@@ -2,21 +2,29 @@ import React, { useState } from "react";
 import Header from "../../components/header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faAngleDown,
   faImage,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import Input from "../../components/input/Input";
 import Modal from "../../components/modal/Modal";
 import PostGL from "../../components/post/PostGL";
-import PriceAndTime from "../../components/post/PriceAndTime";
 import { Button } from "@mui/material";
+import Footer from "../../components/footer/Footer";
+import PostRental from "../../components/post/PostRental";
+import MultipleSelect from "../../components/select/Select";
 
 const Post = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isModalTypeOpen, setIsModalTypeOpen] = useState(false);
   const [files, setFiles] = useState([]);
   const [participant, setparticipant] = useState("");
+  const [postType, setPostType] = useState({});
+  const [timeRepeat, setTimeRepeat] = useState({});
+  const data = [
+    {id: 1, name: "Tuyển giao lưu"},
+    {id: 2, name: "Cho thuê sân đánh"},
+    {id: 3, name: "Tổ chức giải đấu"}
+  ]
 
   const handleOpenCloseModalType = () => {
     setIsModalTypeOpen(!isModalTypeOpen);
@@ -43,16 +51,21 @@ const Post = () => {
 
   const handleChangeFile = (e) => {
     const image = e.target.files[0];
-    console.log(image.type);
-    const obj = {
-      type: image.type,
-      name: URL.createObjectURL(image),
-    };
-    setFiles([...files, obj]);
+    if (image) {
+      const obj = {
+        type: image.type,
+        name: URL.createObjectURL(image),
+      };
+      setFiles([...files, obj]);
+    }
+  };
+
+  const handleDelete = (index) => {
+    setFiles(files.filter((_, i) => i !== index));
   };
 
   return (
-    <div>
+    <>
       {/* headers */}
       <nav className="fixed w-full top-0 z-50 bg-white">
         <div className="header shadow py-3">
@@ -60,7 +73,7 @@ const Post = () => {
         </div>
       </nav>
 
-      <main className="absolute top-[13%] w-full">
+      <main className="mt-[30%] md:mt-[13%] lg:mt-[8%] w-full">
         {/* container */}
         <div className="container max-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4">
           <div className="my-4 sm:my-6 rounded-2xl border-2 flex flex-col md:flex-row gap-6 p-4 sm:p-6">
@@ -70,76 +83,16 @@ const Post = () => {
                 Thông tin chung
               </div>
               {/* type post */}
-              <div
-                className="type-post border h-10 border-solid border-[#ccc] px-3 py-6 flex items-center cursor-pointer w-full relative"
-                onClick={handleOpenCloseModalType}
-              >
-                {/* text */}
-                <div className="text flex flex-col w-11/12 border-r-[1px] border-[#ccc]">
-                  Chọn loại bài đăng
-                </div>
-                {/* icon dropdown */}
-                <div className="icon-drop-down absolute right-[2%] flex">
-                  <FontAwesomeIcon icon={faAngleDown} className="text-lg" />
-                </div>
-
-                {/* Modal type post */}
-                {isModalTypeOpen && (
-                  <Modal
-                    title="Loại bài đăng"
-                    // isOpen={isModalTypeOpen}
-                    onClose={() => setIsModalTypeOpen(false)}
-                    // onSubmit={()}
-                  >
-                    {/* Modal Content */}
-                    <div className="space-y-4">
-                      <div>
-                        <label
-                          htmlFor="city"
-                          className="block text-sm text-gray-700"
-                        >
-                          Chọn tỉnh thành
-                        </label>
-                        <select
-                          id="city"
-                          className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        >
-                          <option value="">Chọn tỉnh thành</option>
-                          {/* Add options here */}
-                        </select>
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="district"
-                          className="block text-sm text-gray-700"
-                        >
-                          Chọn quận huyện
-                        </label>
-                        <select
-                          id="district"
-                          className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        >
-                          <option value="">Chọn quận huyện</option>
-                          {/* Add options here */}
-                        </select>
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="address"
-                          className="block text-sm text-gray-700"
-                        >
-                          Điền địa chỉ cụ thể
-                        </label>
-                        <textarea
-                          id="address"
-                          className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                          rows="3"
-                        ></textarea>
-                      </div>
-                    </div>
-                  </Modal>
-                )}
-              </div>
+              {/* <div className="type-post border h-10 border-solid border-[#ccc] px-3 py-6 flex items-center cursor-pointer w-full relative"> */}
+                  <MultipleSelect
+                    width={"100%"}
+                    title={"Chọn loại bài đăng"}
+                    id={"postType"}
+                    data={data}
+                    setValue={setPostType}
+                    style={{marginTop: "25px"}}
+                  />
+              {/* </div> */}
               {/* name */}
               <Input
                 title={"Tên sân"}
@@ -254,12 +207,16 @@ const Post = () => {
                   <span className="text-red-400 ml-1 gap-3">*</span>
                 </label>
               </div>
-
               {/* Các yêu cầu chi tiết */}
-              <PostGL setValue={setparticipant} />
+              {/* <PostGL setValue={setparticipant} participant={participant}/> */}
 
-              {/* Các thông tin về giá và thời gian */}
-              <PriceAndTime participant={participant} />
+              {postType.id === 2 && 
+                <PostRental/>
+              }
+
+              {postType.id === 1 &&
+                <PostGL setValue={setparticipant} participant={participant} setTimeRepeat={setTimeRepeat}/>
+              }
             </div>
 
             {/* image and video and contact */}
@@ -314,7 +271,16 @@ const Post = () => {
                   <div className="mt-2 grid gap-3 grid-cols-3">
                     {files.map((file, index) => {
                       return (
-                        <div key={index} className="text-sm text-gray-600">
+                        <div
+                          key={index}
+                          className="relative inline-block text-sm text-gray-600"
+                        >
+                          <button
+                            className="absolute top-0 right-0 bg-red-500 text-white rounded-[50%] w-[20px] h-[20px] flex items-center justify-center cursor-pointer hover:bg-blend-darken z-50"
+                            onClick={() => handleDelete(index)}
+                          >
+                            X
+                          </button>
                           {file.type.startsWith("video") ? (
                             <video controls className="w-auto h-auto">
                               <source src={file.name} type="video/mp4" />
@@ -349,10 +315,8 @@ const Post = () => {
       </main>
 
       {/* footer */}
-      <footer className="bg-neutral-800">
-        <div className="footer"></div>
-      </footer>
-    </div>
+      <Footer />
+    </>
   );
 };
 

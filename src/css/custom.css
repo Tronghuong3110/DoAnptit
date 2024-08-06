@@ -39,6 +39,8 @@ color: #000 !important;
 
 /* Search in body */
 .react-datepicker-wrapper {
-    width: 40%;
+    width: 50%;
 }
-  
+.react-datepicker-popper {
+    z-index: 10 !important;
+}
