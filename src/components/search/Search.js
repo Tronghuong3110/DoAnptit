@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
 import Dialog from "../dialog/Dialog";
 import DistrictListDialog from "../dialog/DistrictListDialog";
+import { useNavigate } from "react-router-dom";
 
 const districts = ["Thành phố Hà Nội", "Quận Hà Đông", "Quận Hoàn Kiếm", "Quận Ba Đình"];
 
@@ -23,6 +24,7 @@ const Search = () => {
   const dialogLocationRef = useRef(null);
   const dialogTypeRef = useRef(null);
   const districtDialogRef = useRef(null);
+  const navigate = useNavigate();
 
   const onFocusInput = () => {
     if (inputValue.trim()) {
@@ -85,6 +87,11 @@ const Search = () => {
     }
   }, [inputValue]);
 
+  // switch page
+  const switchPageCourtExchange = () => {
+    const newLink = "/search";
+    navigate(newLink);
+  }
   return (
     <>
       <div className="search-container items-center bg-white rounded-full p-5 shadow-md mb-4 w-1/3">
@@ -107,7 +114,7 @@ const Search = () => {
           >
             Giao lưu
           </div>
-          <button className="search-button bg-red-600 text-white rounded-full p-2 flex items-center justify-center outline-none hover:bg-red-700">
+          <button className="search-button bg-red-600 text-white rounded-full p-2 flex items-center justify-center outline-none hover:bg-red-700" onClick={switchPageCourtExchange}>
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </button>
         </div>
