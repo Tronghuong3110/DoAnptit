@@ -2,23 +2,10 @@ import React, { useState } from "react";
 import Input from "../input/Input";
 import MultipleSelect from "../select/Select";
 import PriceAndTime from "./PriceAndTime";
+import { participants, dataTD } from "../../assets/dataFetch/data";
 
 const PostGL = ({ setValue, participant, setTimeRepeat }) => {
-  const data = [
-    { id: 1, name: "Yếu" },
-    { id: 2, name: "TB-" },
-    { id: 3, name: "TB+" },
-    { id: 4, name: "TB++" },
-    { id: 5, name: "TB+++" },
-    { id: 6, name: "Trung Bình Khá" },
-    { id: 7, name: "Khá" },
-    { id: 8, name: "Chuyên nghiệp" }
-  ]
-  const participants = [
-    { id: 1, name: "Nam" },
-    { id: 2, name: "Nữ" },
-    { id: 3, name: "Cả nam và nữ" },
-  ];
+  
   // const [value, setValue] = useState("");
   return (
     <>
@@ -54,7 +41,7 @@ const PostGL = ({ setValue, participant, setTimeRepeat }) => {
         <MultipleSelect
           width={"48%"}
           title={"Trình độ tối thiểu"}
-          data={data}
+          data={dataTD}
           id={"minimun-level"}
         />
 
@@ -62,7 +49,7 @@ const PostGL = ({ setValue, participant, setTimeRepeat }) => {
         <MultipleSelect
           width={"48%"}
           title={"Trình độ tối đa"}
-          data={data}
+          data={dataTD}
           id={"maximun-level"}
         />
       </div>

@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import Header from "../../components/header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faImage,
-  faLocationDot,
-} from "@fortawesome/free-solid-svg-icons";
+import { faImage, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import Input from "../../components/input/Input";
 import Modal from "../../components/modal/Modal";
 import PostGL from "../../components/post/PostGL";
@@ -12,6 +9,7 @@ import { Button } from "@mui/material";
 import Footer from "../../components/footer/Footer";
 import PostRental from "../../components/post/PostRental";
 import MultipleSelect from "../../components/select/Select";
+import { dataSelectTypePost } from "../../assets/dataFetch/data";
 
 const Post = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -20,11 +18,6 @@ const Post = () => {
   const [participant, setparticipant] = useState("");
   const [postType, setPostType] = useState({});
   const [timeRepeat, setTimeRepeat] = useState({});
-  const data = [
-    {id: 1, name: "Tuyển giao lưu"},
-    {id: 2, name: "Cho thuê sân đánh"},
-    {id: 3, name: "Tổ chức giải đấu"}
-  ]
 
   const handleOpenCloseModalType = () => {
     setIsModalTypeOpen(!isModalTypeOpen);
@@ -84,14 +77,13 @@ const Post = () => {
               </div>
               {/* type post */}
               {/* <div className="type-post border h-10 border-solid border-[#ccc] px-3 py-6 flex items-center cursor-pointer w-full relative"> */}
-                  <MultipleSelect
-                    width={"100%"}
-                    title={"Chọn loại bài đăng"}
-                    id={"postType"}
-                    data={data}
-                    setValue={setPostType}
-                    style={{marginTop: "25px"}}
-                  />
+              <MultipleSelect
+                width={"100%"}
+                title={"Chọn loại bài đăng"}
+                id={"postType"}
+                data={dataSelectTypePost}
+                setValue={setPostType}
+              />
               {/* </div> */}
               {/* name */}
               <Input
@@ -210,13 +202,15 @@ const Post = () => {
               {/* Các yêu cầu chi tiết */}
               {/* <PostGL setValue={setparticipant} participant={participant}/> */}
 
-              {postType.id === 2 && 
-                <PostRental/>
-              }
+              {postType.id === 2 && <PostRental />}
 
-              {postType.id === 1 &&
-                <PostGL setValue={setparticipant} participant={participant} setTimeRepeat={setTimeRepeat}/>
-              }
+              {postType.id === 1 && (
+                <PostGL
+                  setValue={setparticipant}
+                  participant={participant}
+                  setTimeRepeat={setTimeRepeat}
+                />
+              )}
             </div>
 
             {/* image and video and contact */}
