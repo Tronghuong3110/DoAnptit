@@ -82,7 +82,7 @@ const Court = () => {
       <div className="name-author grid grid-flow-col gap-2 absolute right-0 top-0 hover:opacity-75 cursor-pointer items-center">
         <div className="avatar">
           <img
-            src="https://scontent.fhan20-1.fna.fbcdn.net/v/t39.30808-1/445046703_1899151220523801_6024436370293723393_n.jpg?stp=dst-jpg_s200x200&_nc_cat=109&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=SJm2Af6mNooQ7kNvgFVBTwl&_nc_ht=scontent.fhan20-1.fna&cb_e2o_trans=t&oh=00_AYA10rz2MDiJv0JHq6JAJC9vaWh5kiJ12lk3kALBUemKWA&oe=66C17C73"
+            src="https://scontent.fhan20-1.fna.fbcdn.net/v/t39.30808-1/445046703_1899151220523801_6024436370293723393_n.jpg?stp=dst-jpg_s200x200&_nc_cat=109&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=7C5mNrhAbfcQ7kNvgEoCnyS&_nc_ht=scontent.fhan20-1.fna&cb_e2o_trans=t&oh=00_AYCzoVmOrVdOvk6Nba8WuKO1-ariUIIzhilMLkmPDDXbJA&oe=66C92D33"
             alt="Ảnh đại diện tác giả"
             className="h-[30px] object-fill rounded-[50%]"
           />

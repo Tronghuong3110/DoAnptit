@@ -11,6 +11,10 @@ import {
   dataSelectTypePost,
 } from "../../assets/dataFetch/data";
 import Court from "../../components/court/court";
+import Footer from "../../components/footer/Footer";
+import LeafLetMap from "../../components/leafletmap/leafLetMap";
+import { MapContainer, TileLayer } from "react-leaflet";
+import "../../css/lifeMap.css";
 
 const CourtExchange = () => {
   // các điều kiện cần lặp: Thời gian đăng gần nhất, thời gian diễn ra gần nhất - button
@@ -112,20 +116,24 @@ const CourtExchange = () => {
 
       {/* main */}
       <main className="main grid grid-flow-col mt-[30%] md:mt-[18%] lg:mt-[12%] w-full">
-        <div className="content-main mx-[10px] relative">
-          <div className="list-court grid grid-flow-row gap-2 w-1/2">
-            {Array(3).fill().map((_, index) => {
-              return <Court key={index}/>;
-            })}
+        <div className="content-main mx-[10px] relative flex">
+          <div className="list-court grid grid-flow-row gap-2 w-1/2 mr-3">
+            {Array(3)
+              .fill()
+              .map((_, index) => {
+                return <Court key={index} />;
+              })}
           </div>
 
           {/* map */}
-          <div className="map fixed h-[500px] w-1/2"></div>
+          <div className="map h-[500px] w-1/2 fixed right-0">
+            <LeafLetMap />
+          </div>
         </div>
       </main>
 
       {/* footer */}
-      <footer className="footer"></footer>
+      <Footer />
     </>
   );
 };
