@@ -13,8 +13,8 @@ import {
 import Court from "../../components/court/court";
 import Footer from "../../components/footer/Footer";
 import LeafLetMap from "../../components/leafletmap/leafLetMap";
-import { MapContainer, TileLayer } from "react-leaflet";
 import "../../css/lifeMap.css";
+import getMyLocation from "../../function/getMyLocation";
 
 const CourtExchange = () => {
   // các điều kiện cần lặp: Thời gian đăng gần nhất, thời gian diễn ra gần nhất - button
@@ -28,10 +28,12 @@ const CourtExchange = () => {
 
   const titlesOfButton = ["Mới nhất", "Sắp diễn ra"];
 
+  const location = getMyLocation();
+
   return (
     <>
       {/* Header */}
-      <nav className="header fixed w-full shadow py-3 grid grid-flow-row gap-9 top-0 z-50  bg-white">
+      <nav className="header fixed w-full shadow py-3 grid grid-flow-row gap-9 top-0 z-[9999]  bg-white">
         <div className="header-content">
           <Header />
         </div>
@@ -115,10 +117,10 @@ const CourtExchange = () => {
       </nav>
 
       {/* main */}
-      <main className="main grid grid-flow-col mt-[30%] md:mt-[18%] lg:mt-[12%] w-full">
+      <main className="main grid grid-flow-col mt-[30%] md:mt-[18%] lg:mt-[12%] w-full mb-2">
         <div className="content-main mx-[10px] relative flex">
-          <div className="list-court grid grid-flow-row gap-2 w-1/2 mr-3">
-            {Array(3)
+          <div className="list-court h-[585px] grid grid-flow-row gap-2 w-1/2 mr-3 overflow-y-auto no-scrollbar">
+            {Array(5)
               .fill()
               .map((_, index) => {
                 return <Court key={index} />;
@@ -126,8 +128,8 @@ const CourtExchange = () => {
           </div>
 
           {/* map */}
-          <div className="map h-[500px] w-1/2 fixed right-0">
-            <LeafLetMap />
+          <div className="map w-1/2 ml-2 px-[1px] py-[1px] border-[1px] solid border-[#ccc] rounded-md h-[585px]">
+            <LeafLetMap location={location}/>
           </div>
         </div>
       </main>
