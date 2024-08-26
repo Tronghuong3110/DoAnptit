@@ -1,10 +1,12 @@
-import React, { useRef } from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import React, { useEffect, useRef, useState } from "react";
+import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
 import "../../css/lifeMap.css";
 import "leaflet/dist/leaflet.css";
-import L, { map } from "leaflet";
+import L from "leaflet";
 
-const LeafLetMap = ({ location }) => {
+const LeafLetMap = ({ location, routerData, markersData}) => {
+  const [markers, setMarkers] = useState(markersData);
+
   const iconLocation = new L.Icon({
     iconUrl: require("../../assets/images/location.png"),
     iconSize: [40, 40],
@@ -17,7 +19,39 @@ const LeafLetMap = ({ location }) => {
       17
     );
   }
-  console.log(location);
+
+  const MapClick = () => {
+    useMapEvents({
+      click(e) {
+        console.log(e);
+        setMarkers((pre) => [...pre, { lat: e.latlng.lat, lng: e.latlng.lng }]);
+      },
+    });
+    return null;
+  };
+
+  useEffect(() => {
+    if(mapRef.current && routerData.lat && routerData.lng) {
+      const map = mapRef.current;
+      const currentPosition = [location.coordinates.lat, location.coordinates.lng];
+      const destinationPosition = [routerData.lat, routerData.lng];
+
+      map.eachLayer((layer) => {
+        if (layer instanceof L.Polyline) {
+          map.removeLayer(layer);
+        }
+      });
+
+      const polyline = L.polyline([currentPosition, destinationPosition], {
+        color: 'blue',
+        weight: 5,
+        opacity: 0.7,
+      }).addTo(map);
+
+      map.fitBounds(polyline.getBounds());
+    }
+  }, [routerData, location]);
+
   return (
     <>
       <MapContainer
@@ -44,6 +78,15 @@ const LeafLetMap = ({ location }) => {
             icon={iconLocation}
           ></Marker>
         )}
+
+        {markers.map((marker, index) => (
+          <Marker
+            position={[marker.lat, marker.lng]}
+            key={index}
+            icon={iconLocation}
+          ></Marker>
+        ))}
+        <MapClick />
       </MapContainer>
     </>
   );

@@ -25,10 +25,21 @@ const CourtExchange = () => {
   const [conditionTd, setConditionTd] = useState({});
   const [conditionParticipant, setConditionParticipant] = useState({});
   const [conditionType, setConditionType] = useState({});
+  const [routerData, setRouterData] = useState({});
 
   const titlesOfButton = ["Mới nhất", "Sắp diễn ra"];
+  const markersData = [
+    {lat: 20.984472101316687, lng: 105.78928054578397}
+  ]
 
   const location = getMyLocation();
+
+  const handleSetRouter = (lat, lng) => {
+    setRouterData({
+      lat,
+      lng
+    })
+  }
 
   return (
     <>
@@ -119,17 +130,16 @@ const CourtExchange = () => {
       {/* main */}
       <main className="main grid grid-flow-col mt-[30%] md:mt-[18%] lg:mt-[12%] w-full mb-2">
         <div className="content-main mx-[10px] relative flex">
-          <div className="list-court h-[585px] grid grid-flow-row gap-2 w-1/2 mr-3 overflow-y-auto no-scrollbar">
-            {Array(5)
-              .fill()
-              .map((_, index) => {
-                return <Court key={index} />;
+          <div className="list-court grid grid-flow-row gap-2 max-h-[585px] w-1/2 mr-3 overflow-y-auto no-scrollbar">
+            {markersData
+              .map((marker, index) => {
+                return <Court key={index} onclickSetRouter = {handleSetRouter} marker={marker}/>;
               })}
           </div>
 
           {/* map */}
           <div className="map w-1/2 ml-2 px-[1px] py-[1px] border-[1px] solid border-[#ccc] rounded-md h-[585px]">
-            <LeafLetMap location={location}/>
+            <LeafLetMap location={location} routerData={routerData} markersData={markersData}/>
           </div>
         </div>
       </main>

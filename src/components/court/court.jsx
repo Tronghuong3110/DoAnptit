@@ -1,24 +1,31 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, styled } from "@mui/material";
 import React, { useState } from "react";
-import { purple, red } from '@mui/material/colors';
+import { red } from "@mui/material/colors";
 
-const Court = () => {
+const Court = ({ onclickSetRouter, marker }) => {
+  // {lat: 20.984472101316687, lng: 105.78928054578397}
+  // {lat: 20.984472101316687, lng: 105.78928054578397}
   const [isRegister, setIsRegister] = useState(false);
 
   const ColorButton = styled(Button)(({ theme }) => ({
     backgroundColor: red[500],
-    '&:hover': {
+    "&:hover": {
       backgroundColor: red[500],
     },
   }));
 
   const clickRegister = () => {
     setIsRegister(true);
-  }
+  };
   const cancelRegister = () => {
     setIsRegister(false);
-  }
+  };
+
+  const handleSetRouter = (lat, lng) => {
+    // console.log({lat, lng});
+    onclickSetRouter(lat, lng);
+  };
 
   return (
     <div className=" rounded-lg shadow border-[1px] solid border-[#ccc] px-5 py-3">
@@ -89,14 +96,31 @@ const Court = () => {
           </div>
         </div>
 
-        <div className="button absolute right-0 bottom-0">
-          {/* <Button variant="contained" className="h-[40px]">Hủy đăng ký</Button> */}
+        <div className="button absolute right-0 bottom-0 grid grid-flow-col gap-1">
+          <Button
+            variant="contained"
+            className="h-[40px] mr-2"
+            onClick={() => handleSetRouter(
+              marker.lat,
+              marker.lng,
+            )}
+          >
+            Xem đường đi
+          </Button>
           {!isRegister ? (
-            <Button variant="contained" className="h-[40px]" onClick={() => clickRegister()}>
+            <Button
+              variant="contained"
+              className="h-[40px]"
+              onClick={() => clickRegister()}
+            >
               Đăng ký
             </Button>
           ) : (
-            <ColorButton variant="contained" className="h-[40px]" onClick={() => cancelRegister()}>
+            <ColorButton
+              variant="contained"
+              className="h-[40px]"
+              onClick={() => cancelRegister()}
+            >
               Hủy đăng ký
             </ColorButton>
           )}
@@ -105,7 +129,7 @@ const Court = () => {
         <div className="name-author grid grid-flow-col gap-2 absolute right-0 top-0 hover:opacity-75 cursor-pointer items-center">
           <div className="avatar">
             <img
-              src="https://scontent.fhan20-1.fna.fbcdn.net/v/t39.30808-1/445046703_1899151220523801_6024436370293723393_n.jpg?stp=dst-jpg_s200x200&_nc_cat=109&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=7C5mNrhAbfcQ7kNvgEoCnyS&_nc_ht=scontent.fhan20-1.fna&cb_e2o_trans=t&oh=00_AYCzoVmOrVdOvk6Nba8WuKO1-ariUIIzhilMLkmPDDXbJA&oe=66C92D33"
+              src="/static/images/avatar.jpg"
               alt="Ảnh đại diện tác giả"
               className="h-[30px] object-fill rounded-[50%]"
             />
